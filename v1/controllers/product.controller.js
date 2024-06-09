@@ -63,7 +63,10 @@ const handlerFactory = require("./handlerFactory");
 
 const createProduct = handlerFactory.createOne(Product);
 const getAllProduct = handlerFactory.getAll(Product);
-const getProduct = handlerFactory.getOne(Product);
+const getProduct = handlerFactory.getOne(Product, {
+  path: "category",
+  select: "name",
+});
 const updateProduct = handlerFactory.updateOne(Product);
 const deleteProduct = handlerFactory.deleteOne(Product);
 
