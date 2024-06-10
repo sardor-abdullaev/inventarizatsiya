@@ -1,3 +1,5 @@
+const AppError = require("../../utils/appError");
+const catchAsync = require("../../utils/catchAsync");
 const Category = require("../models/category.model");
 const handlerFactory = require("./handlerFactory");
 
@@ -63,10 +65,21 @@ const getCategory = handlerFactory.getOne(Category);
 const updateCategory = handlerFactory.updateOne(Category);
 const deleteCategory = handlerFactory.deleteOne(Category);
 
+const checkCategory = catchAsync(async (req, res, next) => {
+  const category = await Category.findById(req.body.category);
+  if (!category) {
+    return next(
+      new AppError(`Couldn't find category with ${req.body.category} id.`, 404)
+    );
+  }
+  next();
+});
+
 module.exports = {
   createCategory,
   getAllCategory,
   getCategory,
   updateCategory,
   deleteCategory,
+  checkCategory,
 };

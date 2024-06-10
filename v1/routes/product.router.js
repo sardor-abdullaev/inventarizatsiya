@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const productController = require("../controllers/product.controller");
+const { checkCategory } = require("../controllers/category.controller");
 
 router
   .route("/")
   .get(productController.getAllProduct)
-  .post(productController.createProduct);
+  .post(checkCategory, productController.createProduct);
 
 router
   .route("/:id")

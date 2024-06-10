@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const contractController = require("../controllers/contract.controller");
+const { checkListProducts } = require("../controllers/product.controller");
 
 router
   .route("/")
-  .post(contractController.createContract)
+  .post(checkListProducts, contractController.createContract)
   .get(contractController.getAllContract);
 
 router
