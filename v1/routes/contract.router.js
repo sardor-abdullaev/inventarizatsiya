@@ -12,7 +12,7 @@ router
 router
   .route("/:id")
   .get(contractController.getContract)
-  .patch(contractController.updateContract)
+  .patch(checkListProducts, contractController.updateContract)
   .delete(contractController.deleteContract);
 
 module.exports = router;

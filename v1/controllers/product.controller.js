@@ -73,24 +73,31 @@ const updateProduct = handlerFactory.updateOne(Product);
 const deleteProduct = handlerFactory.deleteOne(Product);
 
 const checkListProducts = catchAsync(async (req, res, next) => {
-  req.body.listProducts.forEach(async (productEl) => {
-    const product = await Product.findById(productEl.product);
-    if (!product) {
-      return next(
-        new AppError(`Couldn't find product with ${productEl.product} id`, 404)
-      );
-    }
-  });
+  req.body.listProducts &&
+    req.body.listProducts.forEach(async (productEl) => {
+      const product = await Product.findById(productEl.product);
+      if (!product) {
+        return next(
+          new AppError(
+            `Couldn't find product with ${productEl.product} id`,
+            404
+          )
+        );
+      }
+    });
   next();
 });
 
 const checkProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.body.product);
-  if (!product) {
-    return next(
-      new AppError(`Couldn't find product with ${req.body.product} id.`, 404)
-    );
+  if (req.body.product) {
+    const product = await Product.findById(req.body.product);
+    if (!product) {
+      return next(
+        new AppError(`Couldn't find product with ${req.body.product} id.`, 404)
+      );
+    }
   }
+  next();
 });
 
 module.exports = {
